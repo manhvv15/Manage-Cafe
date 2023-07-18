@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Coffee Shop</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+            font-family: Arial, sans-serif;
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .left-column {
+            float: left;
+            width: 25%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #fff;
+            height: calc(100vh - 70px);
+            overflow: auto;
+        }
+
+        .right-column {
+            float: right;
+            width: 75%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #fff;
+            height: calc(100vh - 70px);
+            overflow: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f1f1f1;
+            font-weight: bold;
+        }
+
+        select, button, input[type="number"] {
+            font-size: 16px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3e8e41;
+        }
+
+        button#switch-table {
+            background-color: #ff9800;
+        }
+
+        button#switch-table:hover {
+            background-color: #f57c00;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            text-align: right;
+        }
+
+        .total-price {
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        input#discount {
+            width: 100px;
+        }
+
+        input#total-price {
+            width: 150px;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        button#checkout {
+            background-color: #f44336;
+        }
+
+        button#checkout:hover {
+            background-color: #c62828;
+        }
+    </style>
+</head>
+<body >
+    <header style="background-color: #333;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            align-items: center;">
+        <a href="/Admin/ViewAdmincshtml?userName=@ViewBag.userName&password=@ViewBag.password">Admin</a>
+        <a href="/AccountProfile/AccProfile?userName=@ViewBag.userName&password=@ViewBag.password">Profile</a>
+    </header>
+    <h3 style="color:red">@ViewBag.checkAdmin</h3>
+    <div class="left-column">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+            </tr>
+            @{
+                foreach (var item in ViewBag.listTables)
+                {
+                     <tr>
+                        <td><a href="/Manage/ViewManage?tableID=@item.Id" style="text-decoration:none; color:black">@item.Name</a></td>
+                         @if(@item.Status == "Booking"){
+                                    <td style="background-color:lightgreen">@item.Status</td>
+                        }else{
+                                    <td style="background-color:lightgrey">@item.Status</td>
+                        }
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+    <div class="right-column">
+        
+        <form action="/Manage/ViewManage" style="display: inline-block;">
+    <select name="foodID" style="display: inline-block;">
+        @foreach (var item in ViewBag.FoodCategories)
+        {
+            <option value="@item.Id">@item.Name</option>
+        }
+    </select>
+    <input type="number" name="quantity" value="1" min="1" max="10" style="display: inline-block;">
+    <input type="number" name="tableID" value="@ViewBag.getTableID" hidden />
+    <button name="btn" value="Add" style="display: inline-block;">Add</button>
+    <button name="btn" value="Reduce" style="display: inline-block;">Reduce</button>
+</form>
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total Price</th>
+            </tr>
+            @if (ViewBag.tableInfor != null)
+            {
+                @foreach (var item in ViewBag.tableInfor)
+                {
+                             <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Count</td>
+                                <td>$@item.Price</td>
+                                <td>$@(item.Price * item.Count)</td>
+                            </tr>
+                }
+            }
+        </table>
+        @if (ViewBag.switchMessage != null)
+        {
+                            <label>@ViewBag.switchMessage</label>
+        }
+        <form action="/Manage/ViewManage" style="float: left">
+            <div style="display:flex ">
+                <select name="switchTableID">
+                    @foreach (var item in ViewBag.listTables)
+                    {
+                    <option value="@item.Id">@item.Name</option>
+                    }
+            </select>
+            <input type="number" name="tableID" value="@ViewBag.getTableID" hidden/>
+
+        <button name="btn" id="switch-table" value="SwitchTable">Switch Table</button>
+        </div>      
+        <input name="discount" type="text" min="0" max="100" placeholder="(%)">
+
+        <input name="totalPriceCheckout" type="text" value="@ViewBag.TotalPrice" readonly>
+
+        <button name="btn" value="Checkout" onclick="return check()">Checkout</button>
+        </form>
+        
+
+        
+    </div>
+
+</body>
+<script>
+    function check() {
+        let text;
+        if (confirm("Are you sure to checkout") === false) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+</html>

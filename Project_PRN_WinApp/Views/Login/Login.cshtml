@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<br />
+<form action="/Login/Login" method="get">
+    @{
+        if (ViewBag.error != null)
+        {
+            <label style="color:red">@ViewBag.error</label>
+        }
+    }
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="userName" placeholder="Enter your username">
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" placeholder="Enter your password">
+  <input type="submit" value="Login">
+</form>

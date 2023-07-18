@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<br />
+ <body id="profile-body">
+        <form action="/AccountProfile/AccProfile">
+        @if (@ViewBag.MessageProfile != null)
+        {
+                <h3 style="color:red">@ViewBag.MessageProfile</h3>
+        }
+    <label for="username">User Name:</label>
+    <input type="text" id="username" name="username" readonly value="@ViewBag.userName" placeholder="Enter your username">
+
+    <label for="nickname">Nick Name:</label>
+    <input type="text" id="nickname" name="nickname" value="@ViewBag.nickName" placeholder="Enter your nickname">
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" placeholder="Enter your current password">
+
+    <label for="newpassword">New Password:</label>
+    <input type="password" id="newpassword" name="newpassword" placeholder="Enter your new password">
+
+    <label for="confirmpassword">Confirm Password:</label>
+    <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm your new password">
+
+    <div style="display: flex ">
+        <button type="submit" id="update" name="btn" value="Update">Update</button>
+        <button type="submit" id="exit" name="btn" value="Exit">Exit</button>
+    </div>
+    
+</form>
+ </body>

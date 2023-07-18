@@ -1,0 +1,99 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coffee Shop</title>
+    <style>
+        .table-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th {
+  background-color: #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+td:last-child {
+  text-align: center;
+}
+
+.btn-view,
+.btn-update,
+.btn-delete,
+.btn-add {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.btn-add {
+  margin-bottom: 10px;
+}
+    </style>
+</head>
+<body >
+    <div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Table ID</th>
+        <th>Discount</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Burger</td>
+        <td>2</td>
+        <td>10%</td>
+        <td>$10.00</td>
+        <td>
+          <button class="btn-view">View</button>
+          <button class="btn-update">Update</button>
+          <button class="btn-delete">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Fries</td>
+        <td>2</td>
+        <td>0%</td>
+        <td>$4.00</td>
+        <td>
+          <button class="btn-view">View</button>
+          <button class="btn-update">Update</button>
+          <button class="btn-delete">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn-add">Add New Product</button>
+</div>
+
+</body>
+</html>
